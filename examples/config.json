@@ -1,0 +1,6 @@
+{
+  "name": "My Beautiful Desktop",
+  "desktop": "gnome",
+  "packages-neptune": ["firefox", "kdenlive"],
+  "autostart": ""
+}
