@@ -1,6 +1,9 @@
 {
   "name": "My Beautiful Desktop",
+  "userID": "4238483",
   "desktop": "gnome",
   "packages-neptune": ["firefox", "kdenlive"],
-  "autostart": ""
+  "autostart": "",
+  "systemd-enabled": "",
+  "shell": ""
 }
