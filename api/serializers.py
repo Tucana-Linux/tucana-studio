@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from landing.models import Item
+from configurator.models import Item
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
