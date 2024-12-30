@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Config(models.Model):
     name = models.CharField(max_length=200)
-    userID = models.CharField()
+    userID = models.CharField(max_length=16)
     desktop = models.CharField(max_length=10)
     packages = models.JSONField()
     # meta includes autostart apps, systemd services enabled, and what shell the user wants to use

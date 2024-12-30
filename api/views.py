@@ -11,22 +11,21 @@ def getPublicConfigs(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getSpecificConfigs(request):
+def getConfigByUser(request, userID):
     # by default this will just return the user's specific configs, but it can be used to drill into one specific one if the id 
     # or userid is provided
     # TODO add a setting for whether config is private or not
-    id = request.query_params.get('id')
-    user = request.query_params.get('user')
-    if id is not None:
-        item = Config.objects.get(id=id)
-        serializer = ConfigSerializer(item)
-        return Response(serializer.data)
-    if user is None:
-        user = request.user
-
-    items = Config.objects.filter(userID=user)
+    # TODO add check for userid
+    items = Config.objects.filter(userID=userID)
     serializer = ConfigSerializer(items, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getConfigByID(request, id):
+    config = Config.objects.get(id=id)
+    serializer = ConfigSerializer(config)
+    return Response(serializer.data)
+
 
 @api_view(['POST'])
 def addConfig(request):
@@ -36,10 +35,7 @@ def addConfig(request):
     return Response({"id": config.id, **serializer.data})
 
 @api_view(['PUT'])
-def modifyConfig(request):
-    id = request.query_params.get('id')
-    if id is None:
-        return Response({'param-error': 'Missing ID'}, status=status.HTTP_400_BAD_REQUEST)
+def modifyConfig(request, id):
     try:
         config_instance = Config.objects.get(id=id)
     except:
@@ -51,10 +47,7 @@ def modifyConfig(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def downloadConfig(request):
-    id = request.query_params.get('id')
-    if id is None:
-        return Response({'param-error': 'Missing ID'}, status=status.HTTP_400_BAD_REQUEST)
+def downloadConfig(request, id):
     user = request.user
     # TODO implement queue and taskid number <rahul@tucanalinu.org>
     # TODO 3 iso builds per user <rahul@tucanalinux.org>
