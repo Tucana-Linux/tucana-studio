@@ -15,10 +15,10 @@ def getSpecificConfigs(request):
     # by default this will just return the user's specific configs, but it can be used to drill into one specific one if the id 
     # or userid is provided
     # TODO add a setting for whether config is private or not
-    id = request.query_params_get('id')
-    user = request.query_params_get('user')
+    id = request.query_params.get('id')
+    user = request.query_params.get('user')
     if id is not None:
-        item = Config.objects.filter(id=id)
+        item = Config.objects.get(id=id)
         serializer = ConfigSerializer(item)
         return Response(serializer.data)
     if user is None:
@@ -37,18 +37,22 @@ def addConfig(request):
 
 @api_view(['PUT'])
 def modifyConfig(request):
-    id = request.query_params_get('id')
+    id = request.query_params.get('id')
     if id is None:
         return Response({'param-error': 'Missing ID'}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        config_instance = Config.objects.get(id=id)
+    except:
+        return Response({'id-error': 'That ID does not exist in the database'}, status=status.HTTP_204_NO_CONTENT)
 
-    serializer = ConfigSerializer(data=request.data)
+    serializer = ConfigSerializer(config_instance, data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
 
 @api_view(['GET'])
 def downloadConfig(request):
-    id = request.query_params_get('id')
+    id = request.query_params.get('id')
     if id is None:
         return Response({'param-error': 'Missing ID'}, status=status.HTTP_400_BAD_REQUEST)
     user = request.user
