@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landing.apps.LandingConfig',
     'configurator.apps.ConfiguratorConfig',
+    'user_auth',
     'rest_framework'
 ]
 
