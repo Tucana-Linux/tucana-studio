@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from configurator.models import Item
+from configurator.models import Config
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Item
+        model = Config
         fields = '__all__'
