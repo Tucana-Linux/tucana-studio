@@ -3,7 +3,8 @@ from rest_framework.decorators import api_view
 from configurator.models import Config
 from .serializers import ConfigSerializer
 from rest_framework import status
-
+# All the other apps call the API views directly instead of making an http request,
+# may change that later
 @api_view(['GET'])
 def getPublicConfigs(request):
     items = Config.objects.all()

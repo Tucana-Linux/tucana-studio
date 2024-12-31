@@ -2,6 +2,11 @@
 {% if user.is_authenticated %}
 <p>Hola {{ user.username }}</p>
 <p>Your ID is {{ user.id }}</p>
+<p><a href="/configurator/">Configurator Dashboard</a></p>
+<p><a href="/share/">User Share</a></p>
+<p><a href="/auth/logout/">Logout</a></p>
 {% else %}
 <p>login please</p>
+<p><a href="/auth/login/">Login</a></p>
 {% endif %}
+

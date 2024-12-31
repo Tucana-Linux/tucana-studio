@@ -21,7 +21,7 @@ def login_user(request):
             return redirect('/auth/login/')
         
         login(request, user)
-        return redirect('/home/')
+        return redirect('/')
 
     return render(request, 'login.html')
 
@@ -44,3 +44,15 @@ def register_user(request):
         messages.info(request, f"Account: {username} created successfully")
         return redirect('/auth/register/')
     return render(request, 'register.html')
+
+def logout_user(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You are not logged in!")
+        return render(request, 'logout.html')
+    try:
+        logout(request)
+        messages.info(request, "Logout successful")
+    except Exception as e:
+        messages.error(request, f"Error: {e}")
+    return render(request, 'logout.html')
+    
