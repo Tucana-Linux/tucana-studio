@@ -8,7 +8,7 @@ import json
 def deleteConfig(request):
     pass
 def newConfig(request):
-    render(request, 'new.html')
+    render(request, 'config.html')
 
 def modifyConfig(request, id):
     # we are using the API here so that any updates to the API will replicate
@@ -18,5 +18,5 @@ def modifyConfig(request, id):
     except Exception as e:
         render(request, 'error.html')
 
-    render(request, 'modify.html', config)
+    render(request, 'config.html', config)
     
