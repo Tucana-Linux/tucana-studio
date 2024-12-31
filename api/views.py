@@ -22,8 +22,11 @@ def getConfigByUser(request, userID):
 
 @api_view(['GET'])
 def getConfigByID(request, id):
-    config = Config.objects.get(id=id)
-    serializer = ConfigSerializer(config)
+    try:
+        config_instance = Config.objects.get(id=id)
+    except:
+        return Response({'id-error': 'That ID does not exist in the database'}, status=status.HTTP_204_NO_CONTENT)
+    serializer = ConfigSerializer(config_instance)
     return Response(serializer.data)
 
 
@@ -31,8 +34,9 @@ def getConfigByID(request, id):
 def addConfig(request):
     serializer = ConfigSerializer(data=request.data)
     if serializer.is_valid():
-        config = serializer.save()
-    return Response({"id": config.id, **serializer.data})
+        config = serializer.save(userID=request.user.id)
+        return Response({"id": config.id})
+    return Response(serializer.errors, status=400)
 
 @api_view(['PUT'])
 def modifyConfig(request, id):
@@ -45,6 +49,17 @@ def modifyConfig(request, id):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteConfig(request, id):
+    try:
+        config_instance = Config.objects.get(id=id)
+    except:
+        return Response({'id-error': 'That ID does not exist in the database'}, status=status.HTTP_204_NO_CONTENT)
+    
+    config_instance.delete()
+    return Response({"id": id})
+
 
 @api_view(['GET'])
 def downloadConfig(request, id):

@@ -5,3 +5,4 @@ class ConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = Config
         fields = '__all__'
+        read_only_fields = ('userID', )

@@ -1,0 +1,7 @@
+<h1>Homepage</h1>
+{% if user.is_authenticated %}
+<p>Hola {{ user.username }}</p>
+<p>Your ID is {{ user.id }}</p>
+{% else %}
+<p>login please</p>
+{% endif %}
