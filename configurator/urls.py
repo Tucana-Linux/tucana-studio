@@ -3,6 +3,7 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
+    path('', views.myConfigs),
     path('/config/new/', views.newConfig),
     path('/config/modify/<int:id>', views.modifyConfig),
     path('/config/delete/<int:id>', views.modifyConfig)
